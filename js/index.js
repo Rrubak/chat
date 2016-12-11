@@ -65,7 +65,7 @@
 
     // Helpers
     function setName(name) {
-        $.trim(name) === '' || $.trim(name) === null ? name = 'John Doe' : name = name;
+        $.trim(name) === '' || $.trim(name) === null ? name = "User" : name = name;
         $('h1').text(name);
         localStorage.setItem('username', name);
         $('#username').val(name).addClass('used');
@@ -128,7 +128,7 @@
             $('#chat-floater').removeClass('hidden');
         }
 
-        if (route === '.list-chat') {
+        if (route === '.list-chat' || route === '.chat1') {
             $('.mdi-menu').hide();
             $('.mdi-arrow-left').show();
             $('#content').addClass('chat');
@@ -193,14 +193,12 @@
     });
 
     $('.list-text > ul > li').on('click', function() {
-        $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
-
-        // timeout just for eyecandy...
+        // $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
         setTimeout(function() {
             $('.shown').removeClass('shown');
 
-            $('.list-chat').addClass('shown');
-            setRoute('.list-chat');
+            $('.chat1').addClass('shown');
+             setRoute('.chat1');
             $('.chat-input').focus();
         }, 300);
     });
