@@ -2,11 +2,9 @@
     var GLOBALSTATE = {
         route: '.list-text'
     };
-
     // Set first Route
     setRoute(GLOBALSTATE.route);
     $('.nav > li[data-route="' + GLOBALSTATE.route + '"]').addClass('active');
-
     //dirtiest, ugliest, hackiest ripple effect solution ever... but they work xD
     $('.floater').on('click', function(event) {
         var $ripple = $('<div class="ripple tiny bright"></div>');
@@ -25,7 +23,6 @@
         }, 530)
 
     });
-
     // Have to Delegate ripple due to dom manipulation (add)
     $('ul.mat-ripple').on('click', 'li', function(event) {
         if ($(this).parent().hasClass('tiny')) {
@@ -52,7 +49,6 @@
 
     // Set Name
     setName(localStorage.getItem('username'));
-
     // Dyncolor ftw
     if (localStorage.getItem('color') !== null) {
         var colorarray = JSON.parse(localStorage.getItem('color'));
@@ -109,6 +105,8 @@
     $('.mdi-arrow-left').on('click', function() {
         $('.shown').removeClass('shown');
         setRoute('.list-text');
+        $('#message').hide();
+
     });
 
     // Set Routes - set floater
@@ -128,7 +126,7 @@
             $('#chat-floater').removeClass('hidden');
         }
 
-        if (route === '.list-chat' || route === '.chat1') {
+        if (route === '.user') {
             $('.mdi-menu').hide();
             $('.mdi-arrow-left').show();
             $('#content').addClass('chat');
@@ -178,31 +176,54 @@
             stylechange(imgData);
         }
     });
-
-    $('.mdi-send').on('click', function() {
-        var $chatmessage = '<p>' + $('.chat-input').val() + '</p>';
-        $('ul.chat > li > .current').append($chatmessage);
-        $('.chat-input').val('');
-    });
-
-    $('.chat-input').on('keyup', function(event) {
-        event.preventDefault();
-        if (event.which === 13) {
-            $('.mdi-send').trigger('click');
+    $(document).on("click",".mdi-send",function() {
+       var user_id = this.id;
+       // console.log(data); 
+        var msg = $('#msg'+user_id).val();
+        // console.log(msg);
+        if(msg == ""){
+            msg = "&#x1f64b;&#x1f64b;&#x1f64b;";
         }
+        var my_user_id = user_id.split('r');
+        // console.log(my_user_id[1]);
+        $.ajax({
+            type: "POST",
+            url: "../controller/insert_message.php",
+            data: {user_id : user_id, message_content : msg},
+            success: function(data) {  
+                $('#user'+my_user_id[1]).click();
+            }
+        });
     });
+    $('.chat-input').on('keyup', function(event) {
+        console.log("hello");
+        // event.preventDefault();
+        // if (event.which === 13) {
+        //     $('.mdi-send').trigger('click');
+        // }
+    });
+   
 
     $('.list-text > ul > li').on('click', function() {
+        var data = this.id;
         // $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
+        // console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "../controller/get_message.php",
+            data: {user_id : data, },
+            success: function(data) {  
+                // console.log(data);
+                document.getElementById('response').innerHTML = data;
+            }
+        });
         setTimeout(function() {
             $('.shown').removeClass('shown');
-
-            $('.chat1').addClass('shown');
-             setRoute('.chat1');
+            $('.'+data+'').addClass('shown');
+            setRoute('.user');
             $('.chat-input').focus();
         }, 300);
     });
-
     // List context
     // Delegating for dom manipulated list elements
     $('.list-account > .list').on('click', 'li', function() {
@@ -321,4 +342,10 @@
                 closeModal();
             });
         }
+    });
+    $('document').ready(function(){
+        console.log(my_user_id[1]);
+        // window.setInterval(function(){
+        //     $('#user'+my_user_id[1]).click();
+        // }, 5000);
     });

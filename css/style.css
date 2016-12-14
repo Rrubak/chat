@@ -244,11 +244,11 @@ canvas {
   font-weight: normal;
 }
 #content {
-  height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   background-color: white;
   transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
   margin-top: 55px;
+  height: 580px;
 }
 #content.chat {
   background-color: #e5e5e5;
@@ -353,9 +353,10 @@ canvas {
   border-bottom: 1px solid #7daefe;
   padding: 0 0 0 25px;
   height: 40px;
-  position: relative;
+  position: absolute;
   width: 100%;
   background-color: white;
+  overflow-y:scroll;
 }
 .list-phone .meta-bar.chat,
 .list-text .meta-bar.chat,
@@ -365,7 +366,6 @@ canvas {
   background: white;
   border-bottom: none;
   position: absolute;
-  bottom: 50px;
 }
 .list-chat.shown {
   animation: fade-up 0.444s 1 ease-out;

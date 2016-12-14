@@ -3,7 +3,9 @@
 	landing_page_session_check(); 
 	session_update();
 	$names = get_contact_name();
+	// $messages = get_messages();
 	// print_r($names);
+	// print_r($messages);
 ?>
 <html>
 <head>
@@ -23,9 +25,9 @@
 		<div id="head" class="style-bg"> <i class="mdi mdi-arrow-left"></i> <i class="mdi mdi-fullscreen-exit"></i> <i class="mdi mdi-menu"></i> 
 		<h1><?php echo $_SESSION["user_details"]["username"]; ?></h1><i class="mdi mdi-chevron-down"></i></div>  
 		<div id="content">
-			<div id="floater-position">          
+<!-- 			<div id="floater-position">          
 				<div id="add-contact-floater" class="floater control style-bg hidden"><i class="mdi mdi-plus"></i></div>   
-			</div>
+			</div> -->
 			<div class="card menu">
 				<div class="header">
 				<img src="../images/index.png" />
@@ -43,53 +45,34 @@
 			<div class="list-text">
 				<ul class="list mat-ripple">    
 				<?php
-				foreach ($names as $key => $name) {
-				 	echo '<li>
-						<img src="../images/index.png">
-						<div class="content-container">
-							<span class="name">'.$name['username'].'</span>
-						</div>
-						
-					</li> ';
-				 } 
-				 ?>  
-						<!-- <span class="time">14:00</span> -->
-				</ul> 
-			</div>
-			<div class="list-chat chat1">
-				<ul class="chat">
-					<li>
-						<img src="../images/index.png">
-						<div class="message">o hai!</div>
-					</li>
-					<li>
-						<img src="http://lorempixel.com/100/100/people/1/">
-						<div class="message"></div>
-					</li>
-					<li>
-						<img src="http://s8.postimg.org/76bg2es2t/index.png">
-						<div class="message current">...</div>
-					</li>
+					foreach ($names as $name){
+					 	echo '<li id = "user'.$name['id'].'">
+							<img src="../images/index.png">
+							<div class="content-container">
+								<span class="name">'.$name['username'].'</span>
+							</div>
+							
+						</li> ';
+					 } 
+					 echo "</ul></div>";
+				?>  
+				<div id="response"></div>
+				<!-- <span class="time">14:00</span> -->
 				</ul>
-				<div class="meta-bar chat">
-					<input class="nostyle chat-input" type="text" placeholder="Message..." /> 
-					<i class="mdi mdi-send"></i>
+					</div>  
 				</div>
-			</div>
-		</div>  
-	</div>
-	<div id="contact-modal" data-mode="add" class="card dialog">
-		<h3>Add Contact</h3>
-		<div class="i-group">
-			<input type="text" id="new-user"><span class="bar"></span>
-			<label>Name</label>
-		</div>
-		<div class="btn-container">
-			<span class="btn cancel">Cancel</span>
-			<span class="btn save">Save</span>
-		</div>
-	</div>
-	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src="../js/index.js"></script>
+				<div id="contact-modal" data-mode="add" class="card dialog">
+					<h3>Add Contact</h3>
+					<div class="i-group">
+						<input type="text" id="new-user"><span class="bar"></span>
+						<label>Name</label>
+					</div>
+					<div class="btn-container">
+						<span class="btn cancel">Cancel</span>
+						<span class="btn save">Save</span>
+					</div>
+				</div>
+				<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+				<script src="../js/index.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2016 at 12:37 PM
+-- Generation Time: Dec 14, 2016 at 01:35 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
-  `message_content` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
+  `message_content` varchar(250) NOT NULL,
+  `sender_id` int(250) NOT NULL,
+  `receiver_id` int(250) NOT NULL,
   `message_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
