@@ -13,6 +13,7 @@
 		$conditions = array('id' => $last_message_id['id']);
 		$column_names = array('message_content' => $new_message_content, 'message_time' => date('Y-m-d H:i:s'));
 		$result1 = update($column_names, 'message', $conditions, $conn);
+		$result2 = update('`status`= 1', 'users', '`id`= '.$_SESSION["user_details"]["userid"].'', $conn);
 		// print_r($result);
 	}else{
 		$column_names_and_values = array('message_content' => $message,'receiver_id' => $receiver_id[1], 'sender_id' => $_SESSION["user_details"]["userid"] ,'message_time' => date('Y-m-d H:i:s'));
@@ -26,6 +27,6 @@
 		$result = select('`message_content`,`id`, `receiver_id`, `sender_id`','`message`', $condition , $conn);	
 		$last_message = end($result);
 		$last_message['count'] = count($result);
-		print_r($last_message['count']);
+		// print_r($last_message['count']);
 		return $last_message;
 	}

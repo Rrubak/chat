@@ -3,9 +3,7 @@
 	landing_page_session_check(); 
 	session_update();
 	$names = get_contact_name();
-	// $messages = get_messages();
 	// print_r($names);
-	// print_r($messages);
 ?>
 <html>
 <head>
@@ -50,10 +48,11 @@
 					 	echo '<li id = "user'.$name['id'].'">
 							<img src="../images/index.png">
 							<div class="content-container">
-								<span class="name">'.$name['username'].'</span>
-							</div>
-							
-						</li> ';
+								<span class="name">'.$name['username'].'</span>';
+								if($name['status'] == 1){
+									echo '<i class="mdi mdi-alert-circle" style="color: lime;"></i>';
+								}
+							echo '</div></li> ';
 					 } 
 					 echo "</ul></div>";
 				?>  

@@ -16,7 +16,6 @@
 		return $conn->query($sql);
 	}
 	function landing_page_session_check(){
-		// print_r($_SESSION["user_details"]);
 		if(emptty($_SESSION["user_details"]) || !isset($_SESSION["user_details"])){
 			header('location:../index.php');
 			// print_r("redirect to login");
@@ -31,7 +30,7 @@
 	function get_contact_name(){
 		$conn = db_connect();
 		$condition = '`id` in('.$_SESSION["user_details"]["contact_list"].')';
-		$contacts_name = select('`username`, `id`','users', $condition , $conn);
+		$contacts_name = select('*','users', $condition , $conn);
 		// print_r($contacts_name);
 		return $contacts_name;
 	}
@@ -55,17 +54,6 @@
 			$_SESSION["user_details"]["username"] = $result[0]["username"];
 			$_SESSION["user_details"]["contact_list"] = $result[0]["contact_list"];
 		}
-	}
-	function get_messages(){
-		$conn = db_connect();
-		$contacts_id = explode(',' , $_SESSION["user_details"]["contact_list"]);
-		// print_r($contacts_id);
-		foreach ($contacts_id as $key => $value) {
-			$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") ORDER BY `message_time`";
-			$result[] = select('`receiver_id`, `message_content`, `message_time`', 'message', $condition , $conn);	
-		}
-		// print_r($result);
-		return $result;
 	}
 	function sanitize($input, $con){
 		return mysqli_real_escape_string($con, $input);

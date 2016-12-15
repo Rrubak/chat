@@ -18,5 +18,6 @@
 			 			</li>';
 			 	}
 			echo '</ul></div>';
-
+			$result2 = update('`status`= 0', 'users', '`id`= '.$_SESSION["user_details"]["userid"].'', $conn);
+			// print_r($result2);
 	 	}

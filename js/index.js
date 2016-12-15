@@ -103,7 +103,6 @@
     }
 
     $('.mdi-arrow-left').on('click', function() {
-        window.clearInterval(interval);
         $('.shown').removeClass('shown');
         setRoute('.list-text');
         $('#message').hide();
@@ -191,12 +190,13 @@
             url: "../controller/insert_message.php",
             data: {user_id : user_id, message_content : msg},
             success: function(data) {  
-                // console.log(data);
+                console.log(data);
                 $('#user'+my_user_id[1]).click();
-                    var  interval =  window.setInterval(function(){$('#user'+my_user_id[1]).click();}, 5000);
-                    document.onkeypress = function () {
-                        window.clearInterval(interval);
-                    };
+                //     var  interval =  window.setInterval(function(){$('#user'+my_user_id[1]).click();}, 5000);
+                //     document.onkeypress = function () {
+                //         window.clearInterval(interval);
+                //     };
+                // setTimeout( function(){location.reload();}  , 3000 );
             }
         });
     });
