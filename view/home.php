@@ -23,13 +23,16 @@
 	<style id="dynamic-styles"></style>
 	<div id="hangout">
 		<div id="head" class="style-bg"> <i class="mdi mdi-arrow-left"></i> <i class="mdi mdi-fullscreen-exit"></i> <i class="mdi mdi-menu"></i> 
-		<h1><?php echo $_SESSION["user_details"]["username"]; ?></h1><i class="mdi mdi-chevron-down"></i></div>  
+		<h1><?php echo $_SESSION["user_details"]["username"]; ?></h1><!-- <i class="mdi mdi-logout"> --></i><i class="mdi mdi-chevron-down"></i></div>  
 		<div id="content">
 <!-- 			<div id="floater-position">          
 				<div id="add-contact-floater" class="floater control style-bg hidden"><i class="mdi mdi-plus"></i></div>   
 			</div> -->
 			<div class="card menu">
 				<div class="header">
+				<div id="floater-position">          
+				<div id="chat-floater" style="margin-bottom: 490px;margin-right: -43px;" class="floater control style-bg hidden"><i class="mdi mdi-power"></i></div>   
+			</div> 
 				<img src="../images/index.png" />
 				<h3></h3>
 				</div>
@@ -61,6 +64,7 @@
 				</ul>
 					</div>  
 				</div>
+				<div class="overlay"></div>
 				<div id="contact-modal" data-mode="add" class="card dialog">
 					<h3>Add Contact</h3>
 					<div class="i-group">
@@ -70,6 +74,16 @@
 					<div class="btn-container">
 						<span class="btn cancel">Cancel</span>
 						<span class="btn save">Save</span>
+					</div>
+				</div>
+				<div id="logout" data-mode="add" class="card dialog">
+					<h3>Are You Sure Want to <p>Logout ?</p></h3>
+					<div class="i-group">
+						&#x1f64b;&#x1f64b;&#x1f64b;&#x1f64b;
+					</div>
+					<div class="btn-container">
+						<span id="cancel-btn" class="btn cancel">Cancel</span>
+						<span id="logout-btn" class="btn save">Logout</span>
 					</div>
 				</div>
 				<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

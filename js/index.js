@@ -76,7 +76,7 @@
 
     function closeModal() {
         $('#new-user').val('');
-        $('.overlay').removeClass('add');
+        // $('.overlay').removeClass('add');
         $('.floater').removeClass('active');
         $('#contact-modal').fadeOut();
 
@@ -192,9 +192,23 @@
             data: {user_id : user_id, message_content : msg},
             success: function(data) {  
                 $('#user'+my_user_id[1]).click();
+                // i = 1;
+                //     window.setInterval(function(e){
+                //         $('#user'+my_user_id[1]).click();
+                //         // console.log(my_user_id[1]);
+                //         if(i == 5){
+                //             e.preventDefault();
+                //         }
+                //         i++;
+                //     }, 5000);
             }
         });
     });
+     $('#chat-floater').on('click',function(){
+        console.log("hello baby &#x1f64b;");
+        $('.overlay').toggleClass('add');
+        $('#logout').show();
+     });
     $('.chat-input').on('keyup', function(event) {
         console.log("hello");
         // event.preventDefault();
@@ -279,7 +293,7 @@
     // menuclick
     $('#head .mdi-menu').on('click', function() {
         $('.menu').toggleClass('open');
-        $('.overlay').toggleClass('add');
+        // $('.overlay').toggleClass('add');
     });
 
     // viewtoggle > 1000
@@ -312,6 +326,20 @@
     $('#contact-modal').on('click', '.btn.cancel', function() {
         closeModal();
     });
+    $('#cancel-btn').on('click', function() {
+       $('#logout').hide();
+       $('.overlay').toggleClass('add');
+    });
+    $('#logout-btn').on('click', function() {
+        console.log("bye bye");
+        $.ajax({
+            type: "POST",
+            url: "../controller/logout.php",
+            success: function(data) {  
+                console.log(data);
+            }
+        });
+    });
 
     $('#new-user').on('keydown', function(event) {
         switch (event.which) {
@@ -343,9 +371,4 @@
             });
         }
     });
-    $('document').ready(function(){
-        console.log(my_user_id[1]);
-        // window.setInterval(function(){
-        //     $('#user'+my_user_id[1]).click();
-        // }, 5000);
-    });
+

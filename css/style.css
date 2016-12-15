@@ -218,7 +218,8 @@ canvas {
   transition: all 0.333s ease-in-out;
 }
 #head .mdi-chevron-down,
-#head .mdi-chevron-up {
+#head .mdi-chevron-up,
+#head .mdi-logout {
   margin: 0 15px 0 auto;
   font-size: 1.5em;
   cursor: pointer;
