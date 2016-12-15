@@ -4,15 +4,15 @@
 	$receiver_id = explode('r' ,$_POST['user_id']);
 	$message = $_POST['message_content'];
 	$last_message_id = get_last_message($receiver_id[1] , $conn);
-	if($last_message_id['receiver_id'] == $receiver_id[1] && $last_message_id['sender_id'] == $_SESSION["user_details"]["userid"]){
+	if($last_message_id['receiver_id'] == $receiver_id[1] && $last_message_id['sender_id'] == $_SESSION["user_details"]["userid"] && $last_message_id['count'] != 1){
 		// echo "error";
-		$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].") ORDER BY `message_time`";
+		$condition = " `sender_id`  = ".$_SESSION["user_details"]["userid"]." AND `receiver_id` =".$receiver_id[1]."";
 		$result = select('`message_content`, `message_time`', 'message', $condition , $conn);
 		$last_message_content = end($result);
 		$new_message_content = $last_message_content['message_content']  ."</br>". $message;
 		$conditions = array('id' => $last_message_id['id']);
 		$column_names = array('message_content' => $new_message_content, 'message_time' => date('Y-m-d H:i:s'));
-		$result = update($column_names, 'message', $conditions, $conn);
+		$result1 = update($column_names, 'message', $conditions, $conn);
 		// print_r($result);
 	}else{
 		$column_names_and_values = array('message_content' => $message,'receiver_id' => $receiver_id[1], 'sender_id' => $_SESSION["user_details"]["userid"] ,'message_time' => date('Y-m-d H:i:s'));
@@ -22,9 +22,10 @@
 
 
 	function get_last_message($value , $conn){
-		$condition = " `sender_id`  = ".$_SESSION["user_details"]["userid"]." AND `receiver_id` =".$value."";
-		$result = select('`id`, `receiver_id`, `sender_id`','`message`', $condition , $conn);	
+		$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") ORDER BY `message_time`";
+		$result = select('`message_content`,`id`, `receiver_id`, `sender_id`','`message`', $condition , $conn);	
 		$last_message = end($result);
-		// print_r($last_message);
+		$last_message['count'] = count($result);
+		print_r($last_message['count']);
 		return $last_message;
 	}

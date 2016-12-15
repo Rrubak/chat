@@ -30,9 +30,7 @@
 			</div> -->
 			<div class="card menu">
 				<div class="header">
-				<div id="floater-position">          
-				<div id="chat-floater" style="margin-bottom: 490px;margin-right: -43px;" class="floater control style-bg hidden"><i class="mdi mdi-power"></i></div>   
-			</div> 
+
 				<img src="../images/index.png" />
 				<h3></h3>
 				</div>
@@ -60,6 +58,9 @@
 					 echo "</ul></div>";
 				?>  
 				<div id="response"></div>
+								<div id="floater-position">          
+				<div id="chat-floater"  class="floater control style-bg hidden"><i class="mdi mdi-power"></i></div>   
+			</div> 
 				<!-- <span class="time">14:00</span> -->
 				</ul>
 					</div>  

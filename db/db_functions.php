@@ -16,6 +16,7 @@
 		return $conn->query($sql);
 	}
 	function landing_page_session_check(){
+		// print_r($_SESSION["user_details"]);
 		if(emptty($_SESSION["user_details"]) || !isset($_SESSION["user_details"])){
 			header('location:../index.php');
 			// print_r("redirect to login");

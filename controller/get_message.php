@@ -2,7 +2,7 @@
 	include_once '../db/db_functions.php';
 	$conn = db_connect();
 	$receiver_id = explode('r' ,$_POST['user_id']);
-	$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].") ORDER BY `message_time`";
+	$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$receiver_id[1].")";
 	$result = select('`message_content`, `message_time`', 'message', $condition , $conn);	
 	// print_r($result);
 	 	if($result == "empty"){

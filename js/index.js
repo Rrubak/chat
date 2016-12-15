@@ -103,10 +103,10 @@
     }
 
     $('.mdi-arrow-left').on('click', function() {
+        window.clearInterval(interval);
         $('.shown').removeClass('shown');
         setRoute('.list-text');
         $('#message').hide();
-
     });
 
     // Set Routes - set floater
@@ -191,30 +191,24 @@
             url: "../controller/insert_message.php",
             data: {user_id : user_id, message_content : msg},
             success: function(data) {  
+                // console.log(data);
                 $('#user'+my_user_id[1]).click();
-                // i = 1;
-                //     window.setInterval(function(e){
-                //         $('#user'+my_user_id[1]).click();
-                //         // console.log(my_user_id[1]);
-                //         if(i == 5){
-                //             e.preventDefault();
-                //         }
-                //         i++;
-                //     }, 5000);
+                    var  interval =  window.setInterval(function(){$('#user'+my_user_id[1]).click();}, 5000);
+                    document.onkeypress = function () {
+                        window.clearInterval(interval);
+                    };
             }
         });
     });
      $('#chat-floater').on('click',function(){
-        console.log("hello baby &#x1f64b;");
+        // console.log("hello baby &#x1f64b;");
         $('.overlay').toggleClass('add');
         $('#logout').show();
      });
-    $('.chat-input').on('keyup', function(event) {
-        console.log("hello");
-        // event.preventDefault();
-        // if (event.which === 13) {
-        //     $('.mdi-send').trigger('click');
-        // }
+     $(document).on("keypress",".chat-input",function(event) {
+        if (event.keyCode == 13) {
+            $('.mdi-send').click();
+        }
     });
    
 
@@ -331,12 +325,13 @@
        $('.overlay').toggleClass('add');
     });
     $('#logout-btn').on('click', function() {
-        console.log("bye bye");
+        // console.log("bye bye");
         $.ajax({
             type: "POST",
             url: "../controller/logout.php",
             success: function(data) {  
-                console.log(data);
+                // console.log(data);
+                window.location.replace("../index.php")
             }
         });
     });
