@@ -5,7 +5,8 @@
 	$message = $_POST['message_content'];
 	$last_message_id = get_last_message($receiver_id[1] , $conn);
 	//check previous message sender and receiver id matches current sender and receiver
-	if($last_message_id['receiver_id'] == $receiver_id[1] && $last_message_id['sender_id'] == $_SESSION["user_details"]["userid"]){
+	if($last_message_id != "empty" && $last_message_id['receiver_id'] == $receiver_id[1] && $last_message_id['sender_id'] == $_SESSION["user_details"]["userid"]){
+		print_r("expression");
 		//merge message in previous message
 			//get previous message 
 				$condition = " `sender_id`  = ".$_SESSION["user_details"]["userid"]." AND `receiver_id` =".$receiver_id[1]."";
@@ -36,11 +37,16 @@
 	function get_last_message($value , $conn){
 		$condition = " `sender_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") AND `receiver_id` IN(".$_SESSION["user_details"]["userid"].",".$value.") ORDER BY `message_time`";
 		$result = select('`id`, `receiver_id`, `sender_id`','`message`', $condition , $conn);
-		if (count($result) > 1) {
-			$last_message = end($result);
+		if($result == "empty"){
+			return $result;
 		}else{
-			$last_message = $result;
+			if (count($result) > 1) {
+				$last_message = end($result);
+			}else{
+				$last_message = $result[0];
+			}
 		}
-		print_r($last_message);
+
+		// print_r($last_message);
 		return $last_message;
 	}
