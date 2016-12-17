@@ -2,9 +2,9 @@
 	include_once '../db/db_functions.php';
 	landing_page_session_check(); 
 	session_update();
-	$names = get_contact_name();
+	$names_id = get_contact_name();
 	$unread_id = explode(',',$_SESSION["user_details"]["status"]);
-	// print_r($names);
+	$names = get_name();
 ?>
 <html>
 <head>
@@ -23,10 +23,10 @@
 	<div id="hangout">
 		<div id="head" class="style-bg"> <i class="mdi mdi-arrow-left"></i> <i class="mdi mdi-fullscreen-exit"></i> <i class="mdi mdi-menu"></i> 
 		<h1><?php echo $_SESSION["user_details"]["username"]; ?></h1><!-- <i class="mdi mdi-logout"> --></i><i class="mdi mdi-chevron-down"></i></div>  
-		<div id="content">
-<!-- 			<div id="floater-position">          
+		<div id="content"> 
+			<div id="floater-position" style="padding-bottom: 67px;">          
 				<div id="add-contact-floater" class="floater control style-bg hidden"><i class="mdi mdi-plus"></i></div>   
-			</div> -->
+			</div>
 			<div class="card menu">
 				<div class="header">
 
@@ -45,7 +45,7 @@
 			<div class="list-text">
 				<ul class="list mat-ripple">    
 				<?php
-					foreach ($names as $name){
+					foreach ($names_id as $name){
 					 	echo '<li id = "user'.$name['id'].'">
 							<img src="../images/index.png">
 							<div class="content-container">
@@ -61,9 +61,9 @@
 					 echo "</ul></div>";
 				?>  
 				<div id="response"></div>
-								<div id="floater-position">          
-				<div id="chat-floater"  class="floater control style-bg hidden"><i class="mdi mdi-power"></i></div>   
-			</div> 
+				<div id="floater-position">          
+					<div id="chat-floater"  class="floater control style-bg hidden"><i class="mdi mdi-power"></i></div>   
+				</div> 
 				<!-- <span class="time">14:00</span> -->
 				</ul>
 					</div>  
@@ -72,23 +72,38 @@
 				<div id="contact-modal" data-mode="add" class="card dialog">
 					<h3>Add Contact</h3>
 					<div class="i-group">
-						<input type="text" id="new-user"><span class="bar"></span>
-						<label>Name</label>
+						<select class="form-control" id="new-user">
+						<?php
+							if($names == "empty"){
+								echo "<option>No Contacts Available &#x1f60c; &#x1f60c;</option>";
+							}else{
+								if(is__array($names)){
+									foreach ($names as $value) {
+										echo "<option>".$value['username']."</option>";
+									} 
+								}
+							}
+						 ?>
+					</select>
 					</div>
 					<div class="btn-container">
-						<span class="btn cancel">Cancel</span>
-						<span class="btn save">Save</span>
+						<span  id="cancel-btn1" class="btn cancel">Cancel</span>
+						<span  id="add-btn" class="btn save">Add</span>
 					</div>
 				</div>
 				<div id="logout" data-mode="add" class="card dialog">
 					<h3>Are You Sure Want to <p>Logout ?</p></h3>
 					<div class="i-group">
-						&#x1f64b;&#x1f64b;&#x1f64b;&#x1f64b;
+						&#x1f64b; &#x1f64b; &#x1f64b; We Miss You ,<br>Take Care;
 					</div>
 					<div class="btn-container">
 						<span id="cancel-btn" class="btn cancel">Cancel</span>
 						<span id="logout-btn" class="btn save">Logout</span>
 					</div>
+				</div>
+				<div id="req" data-mode="add" class="card dialog">
+					<h3>Your Request Was Sent,</h3>
+					<p>Wait for Reply &#x1f64b; &#x1f64b; &#x1f64b;</p>
 				</div>
 				<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 				<script src="../js/index.js"></script>

@@ -190,7 +190,7 @@
             url: "../controller/insert_message.php",
             data: {user_id : user_id, message_content : msg},
             success: function(data) {  
-                console.log(data);
+                // console.log(data);
                 $('#user'+my_user_id[1]).click();
                 //     var  interval =  window.setInterval(function(){$('#user'+my_user_id[1]).click();}, 5000);
                 //     document.onkeypress = function () {
@@ -219,7 +219,7 @@
         $.ajax({
             type: "POST",
             url: "../controller/get_message.php",
-            data: {user_id : data, },
+            data: {user_id : data},
             success: function(data) {  
                 // console.log(data);
                 document.getElementById('response').innerHTML = data;
@@ -317,11 +317,12 @@
     });
 
     // killit
-    $('#contact-modal').on('click', '.btn.cancel', function() {
-        closeModal();
-    });
     $('#cancel-btn').on('click', function() {
        $('#logout').hide();
+       $('.overlay').toggleClass('add');
+    });
+    $('#cancel-btn1').on('click', function() {
+       $('#contact-modal').hide();
        $('.overlay').toggleClass('add');
     });
     $('#logout-btn').on('click', function() {
@@ -352,18 +353,20 @@
     });
 
     $('#add-contact-floater').on('click', function() {
-        if ($(this).hasClass('active')) {
-            	closeModal();
-            $(this).removeClass('active');
-
-        } else {
-
-            $(this).addClass('active');
-            setModal('add');
-            $('#contact-modal').one('click', '.btn.save', function() {
-                $('.list-account > .list').prepend('<li><img src="http://lorempixel.com/100/100/people/1/"><span class="name">' + $('#new-user').val() + '</span><i class="mdi mdi-menu-down"></i></li>');
-                closeModal();
-            });
-        }
+        $('.overlay').toggleClass('add');
+        $('#contact-modal').show();
     });
-
+    $('#add-btn').on('click', function() {
+        data = $('#new-user').val();
+        $('#contact-modal').hide();
+        $.ajax({
+            type: "POST",
+            url: "../controller/add_contact.php",
+             data: {username : data},
+            success: function(data) {  
+                console.log(data);
+                $('#req').show();
+                setTimeout( function(){location.reload();}  , 1000 );
+            }
+        });
+    });

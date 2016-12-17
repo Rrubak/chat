@@ -34,6 +34,12 @@
 		// print_r($contacts_name);
 		return $contacts_name;
 	}
+	function get_name(){
+		$conn = db_connect();
+		$condition = '`id` NOT in('.$_SESSION["user_details"]["contact_list"].','.$_SESSION["user_details"]["userid"].')';
+		$name = select('username','users', $condition , $conn);
+		return $name;
+	}
 	function is__array($value){
 		return is_array($value);
 	}

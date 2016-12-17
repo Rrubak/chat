@@ -582,6 +582,17 @@ input.nostyle {
   border-radius: 0;
   border-bottom: 1px solid #757575;
 }
+.i-group select {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  background: #fafafa;
+  color: #636363;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #757575;
+}
 .i-group input:focus {
   outline: none;
 }

@@ -25,8 +25,19 @@
 				// print_r($current_receiver_status[0]['status']);
 				if($current_receiver_status[0]['status'] == 0){
 					$update_msg_status = update('`status`='.$_SESSION["user_details"]["userid"].'', 'users', '`id`= '.$receiver_id[1].'', $conn);
-				}elseif ($current_receiver_status[0]['status'] != $_SESSION["user_details"]["userid"]) {
-					$update_msg_status = update('`status`= "'.$current_receiver_status[0]['status'].','.$_SESSION["user_details"]["userid"].'"', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				}else{
+					$data = explode(',',$current_receiver_status[0]['status']);
+					foreach ($data as  $value) {
+						if ($value == 0) {
+							$update_msg_status = update('`status`= "'.str_replace('0', $_SESSION["user_details"]["userid"], $current_receiver_status[0]['status']).'"', 'users', '`id`= '.$receiver_id[1].'', $conn);
+							break;
+						}
+						if ($value != $_SESSION["user_details"]["userid"]) {
+							$update_msg_status = update('`status`= "'.$current_receiver_status[0]['status'].','.$_SESSION["user_details"]["userid"].'"', 'users', '`id`= '.$receiver_id[1].'', $conn);
+							break;
+						}
+					}
+
 				}
 				// print_r($update_msg_status);
 	}else{
@@ -34,6 +45,15 @@
 			$column_names_and_values = array('message_content' => $message,'receiver_id' => $receiver_id[1], 'sender_id' => $_SESSION["user_details"]["userid"] ,'message_time' => date('Y-m-d H:i:s'));
 			$result = insert('message', $column_names_and_values, $conn);
 			// print_r($result);
+			
+			//update read status in db
+				$current_receiver_status = select('`status`', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				// print_r($current_receiver_status[0]['status']);
+				if($current_receiver_status[0]['status'] == 0){
+					$update_msg_status = update('`status`='.$_SESSION["user_details"]["userid"].'', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				}elseif ($current_receiver_status[0]['status'] != $_SESSION["user_details"]["userid"]) {
+					$update_msg_status = update('`status`= "'.$current_receiver_status[0]['status'].','.$_SESSION["user_details"]["userid"].'"', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				}
 	}
 
 
