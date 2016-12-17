@@ -6,7 +6,6 @@
 	$last_message_id = get_last_message($receiver_id[1] , $conn);
 	//check previous message sender and receiver id matches current sender and receiver
 	if($last_message_id != "empty" && $last_message_id['receiver_id'] == $receiver_id[1] && $last_message_id['sender_id'] == $_SESSION["user_details"]["userid"]){
-		print_r("expression");
 		//merge message in previous message
 			//get previous message 
 				$condition = " `sender_id`  = ".$_SESSION["user_details"]["userid"]." AND `receiver_id` =".$receiver_id[1]."";
@@ -14,7 +13,7 @@
 				$last_message_content = end($get_previous_msg);
 
 			//merge previous and current message content
-				$new_message_content = $last_message_content['message_content']  ."</br>". $message;
+				$new_message_content = $message."</br>".$last_message_content['message_content'];
 
 			//update message content in db
 				$condition1 = array('id' => $last_message_id['id']);
@@ -22,10 +21,14 @@
 				$update_msg_content = update($column_names, 'message', $condition1, $conn);
 
 			//update read status in db
-				$current_sender_status = select('`status`', 'users', '`id`= '.$_SESSION["user_details"]["userid"].'', $conn);
-				print_r($current_sender_status);
-				$update_msg_status = update('`status`= 1', 'users', '`id`= '.$_SESSION["user_details"]["userid"].'', $conn);
-				// print_r($result);
+				$current_receiver_status = select('`status`', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				// print_r($current_receiver_status[0]['status']);
+				if($current_receiver_status[0]['status'] == 0){
+					$update_msg_status = update('`status`='.$_SESSION["user_details"]["userid"].'', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				}elseif ($current_receiver_status[0]['status'] != $_SESSION["user_details"]["userid"]) {
+					$update_msg_status = update('`status`= "'.$current_receiver_status[0]['status'].','.$_SESSION["user_details"]["userid"].'"', 'users', '`id`= '.$receiver_id[1].'', $conn);
+				}
+				// print_r($update_msg_status);
 	}else{
 		//add new message in new entry
 			$column_names_and_values = array('message_content' => $message,'receiver_id' => $receiver_id[1], 'sender_id' => $_SESSION["user_details"]["userid"] ,'message_time' => date('Y-m-d H:i:s'));

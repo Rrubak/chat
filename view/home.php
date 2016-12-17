@@ -3,6 +3,7 @@
 	landing_page_session_check(); 
 	session_update();
 	$names = get_contact_name();
+	$unread_id = explode(',',$_SESSION["user_details"]["status"]);
 	// print_r($names);
 ?>
 <html>
@@ -49,9 +50,12 @@
 							<img src="../images/index.png">
 							<div class="content-container">
 								<span class="name">'.$name['username'].'</span>';
-								if($name['status'] == 1){
-									echo '<i class="mdi mdi-alert-circle" style="color: lime;"></i>';
+								foreach ($unread_id as $key) {
+									if($name['id'] == $key){
+										echo '<i class="mdi mdi-alert-circle" style="color: lime;"></i>';
+									}
 								}
+
 							echo '</div></li> ';
 					 } 
 					 echo "</ul></div>";

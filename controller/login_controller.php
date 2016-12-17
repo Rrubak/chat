@@ -8,6 +8,7 @@
 		$_SESSION["user_details"]["username"] = $result[0]["username"];
 		$_SESSION["user_details"]["userid"] = $result[0]["id"];
 		$_SESSION["user_details"]["contact_list"] = $result[0]["contact_list"];
+		$_SESSION["user_details"]["status"] = $result[0]["status"];
 		header("Location:../view/home.php");
 		// print_r("data fetched");
 	}else{

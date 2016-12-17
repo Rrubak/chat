@@ -53,6 +53,7 @@
 		if($result[0] != "empty"){
 			$_SESSION["user_details"]["username"] = $result[0]["username"];
 			$_SESSION["user_details"]["contact_list"] = $result[0]["contact_list"];
+			$_SESSION["user_details"]["status"] = $result[0]["status"];
 		}
 	}
 	function sanitize($input, $con){
