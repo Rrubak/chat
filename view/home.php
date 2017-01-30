@@ -94,7 +94,7 @@
 				<div id="logout" data-mode="add" class="card dialog">
 					<h3>Are You Sure Want to <p>Logout ?</p></h3>
 					<div class="i-group">
-						&#x1f64b; &#x1f64b; &#x1f64b; We Miss You ,<br>Take Care;
+						&#x1f64b; &#x1f64b; &#x1f64b; We Miss You ,Take Care;
 					</div>
 					<div class="btn-container">
 						<span id="cancel-btn" class="btn cancel">Cancel</span>
